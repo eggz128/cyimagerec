@@ -1,0 +1,7 @@
+{
+  "devDependencies": {
+    "@techstark/opencv-js": "^4.9.0-release.3",
+    "cypress": "^13.13.1",
+    "jimp": "^0.22.12"
+  }
+}

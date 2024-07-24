@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Canvas Image</title>
+    <style>
+        #canvas {
+            border: 1px solid black;
+        }
+        #message {
+            display: none;
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas" width="800" height="600"></canvas>
+    <button id="refresh">Refresh Canvas</button>
+    <p id="message">Image clicked!</p>
+
+    <script>
+        var canvas = document.getElementById('canvas');
+        var ctx = canvas.getContext('2d');
+        var img = new Image();
+        img.src = 'image.jpg';
+
+        img.onload = function() {
+            drawImageAtRandomLocation();
+        };
+
+        canvas.addEventListener('click', function(e) {
+            var rect = canvas.getBoundingClientRect();
+            var x = e.clientX - rect.left;
+            var y = e.clientY - rect.top;
+            console.log(`Detected click coord x ${x} and y ${y}`)
+            if (x > imgX && x < imgX + img.width && y > imgY && y < imgY + img.height) {
+                console.log('Image clicked!');
+                showMessage();
+            }
+        });
+
+        document.getElementById('refresh').addEventListener('click', drawImageAtRandomLocation);
+
+        var imgX, imgY;
+
+        function drawImageAtRandomLocation() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            imgX = Math.random() * (canvas.width - img.width);
+            imgY = Math.random() * (canvas.height - img.height);
+            console.log(`Image drawn to x ${imgX} and y ${imgY}`)
+            ctx.drawImage(img, imgX, imgY);
+        }
+
+        function showMessage() {
+            var messageElement = document.getElementById('message');
+            messageElement.style.display = 'block';
+            setTimeout(function() {
+                messageElement.style.display = 'none';
+            }, 2000);
+        }
+    </script>
+</body>
+</html>
